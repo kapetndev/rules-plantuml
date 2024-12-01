@@ -1,0 +1,32 @@
+# vi: ft=bzl
+
+# Bazel configuration file for the Bazel build system. This file specifies the
+# build options for the entire workspace.
+#
+# Take care to document the options set here.
+#
+# See https://bazel.build/run/bazelrc for more
+
+# Specifies how test output should be displayed. Sends combined stdout/stderr
+# output from all tests into stdout immediately after tests are completed,
+# ensuring that test output from simultaneous tests is not interleaved with each
+# other.
+# Docs: https://bazel.build/reference/command-line-reference#flag--test_output
+test --test_output all
+
+# Warn if a test's timeout is significantly longer than the test's actual
+# execution time. Bazel's default for test_timeout is medium (5 min), but most
+# tests should instead be short (1 min). While a test's timeout should be set
+# such that it is not flaky, a test that has a highly over-generous timeout can
+# hide real problems that crop up unexpectedly. For instance, a test that
+# normally executes in a minute or two should not have a timeout of ETERNAL or
+# LONG as these are much, much too generous.
+# Docs: https://bazel.build/docs/user-manual#test-verbose-timeout-warnings
+test --test_verbose_timeout_warnings
+
+# Always download coverage files for tests from the remote cache. By default,
+# coverage files are not downloaded on test result cahce hits when
+# --remote_download_minimal is enabled, making it impossible to generate a full
+# coverage report.
+# Docs: https://bazel.build/reference/command-line-reference#flag--experimental_fetch_all_coverage_outputs
+test --experimental_fetch_all_coverage_outputs
